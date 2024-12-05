@@ -1,0 +1,169 @@
+{% extends "template.html" %}
+
+{% block content %}
+<script>
+  $(document).ready(function() {
+    // Actualizar URL de búsqueda
+    function url_change() {
+      var baseUrl = "http://localhost:5000/admin/person/search/";
+      var texto = $("#texto").val();
+      var criterio = $("#criterio").val();
+      var url = baseUrl + criterio + "/" + texto;
+      $("#btn-buscar").attr("href", url);
+    }
+
+    // Actualizar URL de ordenación
+    function url_order_change() {
+      var baseUrl = "http://localhost:5000/admin/person/order/";
+      var atributo = $("#atributo").val();
+      var tipo = $("#tipo").val();
+      var algoritmo = $("#algoritmo").val();
+      var url = baseUrl + atributo + "/" + tipo + "/" + algoritmo;
+      $("#btn-ordenar").attr("href", url);
+    }
+
+    // Llamar a las funciones para actualizar las URLs
+    $("#texto").keyup(function() {
+      url_change();
+    });
+
+    $("#criterio").change(function() {
+      url_change();
+    });
+
+    $("#atributo").change(function() {
+      url_order_change();
+    });
+
+    $("#tipo").change(function() {
+      url_order_change();
+    });
+
+    $("#algoritmo").change(function() {
+      url_order_change();
+    });
+  });
+</script>
+
+<div class="pagetitle">
+  <h1>LISTA DE INVERSIONISTAS</h1>
+</div>
+
+<section class="seccion">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Gestión de Inversionistas</h5>
+
+          <!-- Buscar por -->
+          <div class="mb-4">
+            <h6 class="fw-bold">Buscar por:</h6>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="criterio" class="form-label">Criterio</label>
+                <select id="criterio" class="form-select">
+                  <option value="apellido">Apellido</option>
+                  <option value="dni">DNI</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="texto" class="form-label">Texto</label>
+                <input id="texto" class="form-control" placeholder="Ingrese texto a buscar" />
+              </div>
+              <div class="col-md-2 d-flex align-items-end">
+                <a id="btn-buscar" class="btn btn-success w-100">Buscar</a>
+                <a href="/admin/person/registro" class="btn btn-danger">Nuevo</a>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Ordenar por -->
+          <div class="mb-4">
+            <h6 class="fw-bold">Ordenar por:</h6>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="atributo" class="form-label">Atributo</label>
+                <select id="atributo" class="form-select">
+                  <option value="apellido">Apellido</option>
+                  <option value="dni">DNI</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="tipo" class="form-label">Orden</label>
+                <select id="tipo" class="form-select">
+                  <option value="0">Ascendente</option>
+                  <option value="1">Descendente</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="algoritmo" class="form-label">Algoritmo</label>
+                <select id="algoritmo" class="form-select">
+                  <option value="shellsort">ShellSort</option>
+                  <option value="quicksort">QuickSort</option>
+                  <option value="mergesort">MergeSort</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-2 ms-auto">
+                <a id="btn-ordenar" class="btn btn-primary w-100">Ordenar</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabla de resultados -->
+          <hr />
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>
+                  Apellido
+                  <a href="http://localhost:5000/admin/person/order/apellido/0/shellsort">
+                    <i class="bi bi-arrow-up"></i>
+                  </a>
+                  <a href="http://localhost:5000/admin/person/order/apellido/1/shellsort">
+                    <i class="bi bi-arrow-down"></i>
+                  </a>
+                </th>
+                <th>DNI</th>
+                <th>Número Celular</th>
+                <th>Sexo</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in lista %}
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>{{ item.apellido }}</td>
+                <td>{{ item.dni }}</td>
+                <td>{{ item.numCelular }}</td>
+                <td>{{ item.sexo }}</td>
+                <td>{{ item.fechaNacimiento }}</td>
+                <td>{{ item.tipo }}</td>
+                <td>
+                  <a href="/admin/person/edit/{{ item.id }}" class="btn btn-info btn-sm">Modificar</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <!-- Mensaje en caso de que no se encuentre información -->
+          {% if message %}
+          <div class="alert alert-warning">{{ message }}</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

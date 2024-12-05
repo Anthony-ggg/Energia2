@@ -1,0 +1,162 @@
+{% extends "template.html" %}
+
+{% block content %}
+<script>
+    $(document).ready(function(){
+        // Función para construir la URL de búsqueda
+        function url_change(){
+            var url = "http://localhost:5000/admin/energia/search/";
+            var texto = $("#texto").val();
+            var criterio = $("#criterio").val();
+            var tipoBusqueda = $("#tipoBusqueda").val(); 
+            
+            url += criterio + "/" + tipoBusqueda + "/" + texto; 
+            $("#btn").attr("href", url); 
+        }
+        function url_order_change() {
+        var baseUrl = "http://localhost:5000/admin/energia/order/";
+        var atributo = $("#atributo").val();
+        var tipo = $("#tipo").val();
+        var algoritmo = $("#algoritmo").val();
+        var url = baseUrl + atributo + "/" + tipo + "/" + algoritmo;
+        $("#btn-ordenar").attr("href", url);
+    }
+
+        $("#texto").keyup(function(){
+            url_change();
+        });
+        
+        $("#criterio").change(function(){
+            url_change();
+        });
+
+        $("#tipoBusqueda").change(function(){ 
+            url_change();
+        });
+        $("#tipo").change(function() {
+        url_order_change();
+        });
+
+        $("#algoritmo").change(function() {
+        url_order_change();
+        });
+    });
+</script>
+
+<div class="container my-4">
+    <div class="pagetitle">
+        <h1 class="text-center">Lista de Proyectos</h1>
+    </div>
+
+    <section class="seccion mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Proyecto Energía</h5>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <label for="criterio" class="form-label">Criterio</label>
+                                <select id="criterio" class="form-select">
+                                    <option value="nombre">Nombre</option>
+                                    <option value="inversion">Inversión</option>
+                                    <option value="tiempoVida">Tiempo de Vida</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="texto" class="form-label">Texto a buscar</label>
+                                <input id="texto" type="text" class="form-control" placeholder="Ingresa texto">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="tipoBusqueda" class="form-label">Tipo de Búsqueda</label>
+                                <select id="tipoBusqueda" class="form-select">
+                                    <option value="lineal">Lineal</option>
+                                    <option value="binaria">Binaria</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <a id="btn" class="btn btn-success me-2">Buscar</a>
+                                <a href="/admin/energia/registro" class="btn btn-danger">Nuevo</a>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h6 class="fw-bold">Ordenar por:</h6>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <label for="atributo" class="form-label">Atributo</label>
+                                <select id="atributo" class="form-select">
+                                  <option value="nombre">Nombre</option>
+                                  <option value="inversion">Inversion</option>
+                                  <option value ="tiempoVida">Tiempo de Vida</option>
+                                  
+
+                                </select>
+                              </div>
+                              <div class="col-md-4">
+                                <label for="tipo" class="form-label">Orden</label>
+                                <select id="tipo" class="form-select">
+                                  <option value="0">Ascendente</option>
+                                  <option value="1">Descendente</option>
+                                </select>
+                              </div>
+                              <div class="col-md-4">
+                                <label for="algoritmo" class="form-label">Algoritmo</label>
+                                <select id="algoritmo" class="form-select">
+                                  <option value="shellsort">ShellSort</option>
+                                  <option value="quicksort">QuickSort</option>
+                                  <option value="mergesort">MergeSort</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-md-2 ms-auto">
+                                  <a id="btn-ordenar" class="btn btn-primary w-100">Ordenar</a>
+                                </div>
+                              </div>
+                            </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>
+                                            Nombre 
+                                           
+                                        </th>
+                                        <th>Inversión</th>
+                                        <th>Tiempo de Vida</th>
+                                        <th>Fecha de Inicio</th>
+                                        <th>Fecha Fin</th>
+                                        <th>Capacidad Diaria</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in lista %}
+                                    <tr>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.nombre }}</td>
+                                        <td>{{ item.inversion }}</td>
+                                        <td>{{ item.tiempoVida }}</td>
+                                        <td>{{ item.fechaInicio }}</td>
+                                        <td>{{ item.fechaFin }}</td>
+                                        <td>{{ item.capacidadDiaria }}</td>
+                                        <td>
+                                            <a href="/admin/energia/edit/{{ item.id }}" class="btn btn-info btn-sm">Modificar</a>
+                                            <a href="/admin/person/list" class="btn btn-success btn-sm">Inversionista</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

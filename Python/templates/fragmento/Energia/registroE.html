@@ -1,0 +1,92 @@
+{% extends "template.html" %}
+{% block content %}
+
+<div class="container my-4">
+    <div class="text-center py-3">
+        <h1>Registro de Proyectos</h1>
+    </div>
+    <section class="seccion">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Formulario de Registro</h5>
+                        
+                        <!-- Formulario con validación -->
+                        <form class="row g-4 needs-validation" method="POST" action="/admin/energia/save" novalidate>
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" id="nombre" class="form-control" name="nombre" required>
+                                <div class="invalid-feedback">Por favor ingresa el nombre del proyecto.</div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <label for="inversion" class="form-label">Inversión</label>
+                                <input type="text" id="inversion" class="form-control" name="inversion" required>
+                                <div class="invalid-feedback">Por favor ingresa la inversión.</div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <label for="tiempoVida" class="form-label">Tiempo de Vida (en años)</label>
+                                <input type="number" id="tiempoVida" class="form-control" name="tiempoVida" required>
+                                <div class="invalid-feedback">Por favor ingresa el tiempo de vida.</div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <label for="fechaInicio" class="form-label">Fecha de Inicio</label>
+                                <input type="date" id="fechaInicio" class="form-control" name="fechaInicio" required>
+                                <div class="invalid-feedback">Por favor selecciona una fecha de inicio.</div>
+                            </div>
+
+                          
+                            <div class="col-md-6">
+                                <label for="fechaFin" class="form-label">Fecha de Fin</label>
+                                <input type="date" id="fechaFin" class="form-control" name="fechaFin" required>
+                                <div class="invalid-feedback">Por favor selecciona una fecha de fin.</div>
+                            </div>
+
+                            
+                            <div class="col-md-6">
+                                <label for="capacidadDiaria" class="form-label">Capacidad Diaria (kWh)</label>
+                                <input type="text" id="capacidadDiaria" class="form-control" name="capacidadDiaria" required>
+                                <div class="invalid-feedback">Por favor ingresa la capacidad diaria.</div>
+                            </div>
+
+                            <!-- Botones -->
+                            <div class="col-12 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-success btn-lg me-2">Guardar</button>
+                                <a href="/admin/energia/list" class="btn btn-danger btn-lg">Cancelar</a>
+                            </div>
+                        </form>
+                        <!-- Fin del formulario -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+    // Activar validación de Bootstrap
+    (function () {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+
+{% endblock %}

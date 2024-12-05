@@ -1,0 +1,83 @@
+{% extends "template.html" %}
+{%block content%}
+<script>
+    $(document).ready(function(){
+      //alert("Hola");
+      function url_change(){
+        var url = "http://localhost:5000/admin/energia/search/";
+        var texto = $("#texto").val();
+        var criterio = $("#criterio").val();
+        url += criterio + "/" + texto;
+        $("#btn").attr("href",url);
+      }
+    $("#texto").keyup(function(){
+      url_change();
+    });
+    $("#criterio").change(function(){
+      url_change();
+    });
+  });
+  </script>
+
+<div class="pagetitle">
+    <h1>LISTA DE PROYECTOS</h1>
+  </div>
+       
+    
+    <section class = "seccion">
+        <div class = "row">
+            <div class ="col-lg-12">
+
+                <div class="card">
+                    <div class="card-body">
+                       <h5 class = "card-titulo">ProyectoEnergia</h5>
+                        <div class = "col-lg-10">
+                            <label>Criterio</label>
+                            <select id="criterio">
+                                <option value ="nombre">Nombre</option>
+                                <option value ="inversion">Inversion</option>
+                            </select>
+                            <input id ="texto" placeholder="Ingresa un texto a buscar"/>
+                            <a id="btn" class="btn btn-success">Buscar</a>
+                            <a href ="/admin/energia/registro"class = "btn btn-danger">Nuevo</a>
+
+                         
+                        </div>
+
+                        <table class = "table">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre <a href = "http://localhost:5000/admin/energia/order/nombre/0" ><i class="bi bi-arrow-up "></i></a><a href = "http://localhost:5000/admin/energia/order/nombre/1" ><i class="bi bi-arrow-down "></i> </a></th></th></th>
+                                    <th>Inversion</th>
+                                    <th>TiempoDeVida</th>
+                                    <th>FechaDeIncio</th>
+                                    <th>FechaFin</th>
+                                    <th>CapacidadDiaria</th>
+                                    
+                                </tr>
+                            
+                            </thead>
+                            <tbody>
+                                 {% for item in lista %}
+                                    <tr>
+                                        <td>{{item.id}}</td>
+                                        <td>{{item.nombre}}</td>
+                                        <td>{{item.inversion}}</td>
+                                        <td>{{item.tiempoVida}}</td>
+                                        <td>{{item.fechaInicio}}</td>
+                                        <td>{{item.fechaFin}}</td>
+                                        <td>{{item.capacidadDiaria}}</td>
+                                        <td> <a href="/admin/energia/edit/{{item.id}}" class = "btn btn-info">Modicar</a></td>
+                                        <td> <a href="/admin/person/list" class = "btn btn-success">Inversionista</a></td>
+                                        </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+    
+{%endblock%}

@@ -1,0 +1,87 @@
+{% extends "template.html" %}
+{% block content %}
+
+
+<div class="titulo">Editar ProyectoEnergia</div>
+<section class="seccion">
+    <div class="row">
+        
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Registro De Proyectos</h5>
+                  
+                  <!-- Custom Styled Validation with Tooltips -->
+                <form class="row g-3 needs-validation" method="POST" action="/admin/energia/update" novalidate>
+                    <input type="hidden" value="{{energia.id}}" name="id"/>
+                    <div class="col-md-6">
+                        <label for="validationTooltip02" class="form-label">Nombre </label>
+                        <input type="text" class="form-control" name="nombre" required value="{{energia.nombre}}" > 
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="validationTooltip03" class="form-label">Inversion</label>
+                        <input type="text" class="form-control" name="inversion" required value = "{{energia.inversion}}"> 
+                    </div>
+                    
+
+                    <div class="col-md-6">
+                        
+                        <label for="validationTooltip04" class="form-label">TiempoDeVida</label>
+                        <input type="datetime" class="form-control" name="tiempoVida" required value = "{{energia.tiempoVida}}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="validationTooltip04" class="form-label">FechaDeIncio</label>
+                        <input type="date" class="form-control" name="fechaInicio" required value = "{{energia.fechaInicio}}">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="validationTooltip04" class="form-label">FechaDeFin</label>
+                        <input type="date" class="form-control" name="fechaFin" required value = "{{energia.fechaFin}}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="validationTooltip04" class="form-label">CapacidadDiaria</label>
+                        <input type="text" class="form-control" name="capacidadDiaria" required value = "{{energia.capacidadDiaria}}">
+                    </div>
+
+                    <div class="col-6">
+                      <button class="btn btn-success" type="submit">Guardar</button>
+                    </div>
+
+                    <div class="col-6">
+                      <a href="/admin/energia/list" class="btn btn-danger">Cancelar</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+         
+</section>
+
+
+
+
+        
+
+
+
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='vendor/apexcharts/apexcharts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/chart.js/chart.umd.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/echarts/echarts.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/quill/quill.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/simple-datatables/simple-datatables.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/tinymce/tinymce.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/php-email-form/validate.js') }}"></script>
+
+  <!-- Template Main JS File -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+</body>
+
+</html>
+{%endblock%}
